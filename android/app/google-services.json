@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "19522211965",
+    "firebase_url": "https://color-calendar-750f5-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "color-calendar-750f5",
+    "storage_bucket": "color-calendar-750f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19522211965:android:6cc13974e40d9d1e286114",
+        "android_client_info": {
+          "package_name": "io.github.vilginushki.color_calendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19522211965-v2k32843a9fkc2bnosbbkias1keacao0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.vilginushki.color_calendar",
+            "certificate_hash": "7b4e2a9a95719d3a2fce131120cb4cbfcfdafd85"
+          }
+        },
+        {
+          "client_id": "19522211965-u75a2tr16atkc5g8nirqdaskgrn7go22.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzfafUGHkfgY-ZvX3WM5eydeZ-GyIMt9M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19522211965-u75a2tr16atkc5g8nirqdaskgrn7go22.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "19522211965-mr86j0djvbitv3b7um6iq01or24qrob5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.github.vilginushki.colorCalendar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
