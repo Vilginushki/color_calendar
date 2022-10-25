@@ -42,6 +42,7 @@ class _ColorPickerState extends State<ColorPicker> {
                         ),
                       ),
                     );
+                    Navigator.of(context).pop();
                   });
               },
             child: Row(

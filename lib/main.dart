@@ -111,7 +111,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int edit = 0;
 
   List<Color> currentColors = [
@@ -123,34 +122,42 @@ class _HomePageState extends State<HomePage> {
   ];
 
   void changeEdit(int i) => setState(() {
-    edit=i;
-  });
-  void changeColors(Color colors) => setState(() => currentColors[edit] = colors);
+        edit = i;
+      });
+
+  void changeColors(Color colors) =>
+      setState(() => currentColors[edit] = colors);
   List<String> currentText = ["Super", "Dobry", "Śmieszny", "Zły", "Tragiczny"];
 
+  Map<DateTime, Mood> moods = Map();
+
+  void changeMoods(Map<DateTime, Mood> x) => setState(() => moods.addAll(x));
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ApplicationState>(
         builder: (context, appState, child) => Scaffold(
-              appBar: AppBar(
-                title: const Text('Zabawa w kalendarzyk'), //todo: edit
-              ),
-              body: Column(
-                children: [
-                  Container(
+            appBar: AppBar(
+              title: const Text('Zabawa w kalendarzyk'), //todo: edit
+            ),
+            body: Column(
+              children: [
+                Container(
                     margin: const EdgeInsets.only(bottom: 5),
                     child: Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Calendar(pickerColor: currentColors, texts: currentText,),
-                    ),
-                  ),
-                  ColorPicker(pickerColor: currentColors, onColorChanged: changeColors, onEditChanged: changeEdit, texts: currentText,),
-
-                ],
-              )
-            )
-    );
+                        padding: const EdgeInsets.all(3.0),
+                        child: Calendar(
+                            pickerColor: currentColors,
+                            texts: currentText,
+                            moods: moods))),
+                ColorPicker(
+                  pickerColor: currentColors,
+                  onColorChanged: changeColors,
+                  onEditChanged: changeEdit,
+                  texts: currentText,
+                ),
+              ],
+            )));
   }
 }
 

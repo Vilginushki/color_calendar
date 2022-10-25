@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Selector extends StatefulWidget {
-  const Selector({Key? key, required this.colors, required this.texts})
+  const Selector({Key? key, required this.colors, required this.texts, required this.day, required this.moods})
       : super(key: key);
 
   @override
   State<Selector> createState() => _SelectorState();
 
+
+
   final List<Color> colors;
   final List<String> texts;
+  final DateTime day;
+  final Map<DateTime, Mood> moods;
 }
 
 class _SelectorState extends State<Selector> {
@@ -28,7 +32,16 @@ class _SelectorState extends State<Selector> {
                 children: [
                   GestureDetector(
                     onTap: (){
-                      print("X");
+                      print(widget.texts[index]);
+                      if(widget.moods.containsKey(widget.day)){
+                        widget.moods.update(widget.day, (value) => Mood.values[index]);
+                      }
+                      else{
+                        widget.moods.putIfAbsent(widget.day, () => Mood.values[index]);
+                      }
+                      print(widget.moods);
+                      Navigator.of(context).pop();
+
                     },
                     child: Row(
                       children: [
@@ -54,5 +67,9 @@ class _SelectorState extends State<Selector> {
         ),
       ),
     );
+
   }
 }
+
+
+enum Mood {v_good, good, funny, bad, tragedy}
