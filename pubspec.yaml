@@ -44,6 +44,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   firebase_database: ^9.1.7
   firebase_auth: ^3.11.2
+  flutter_launcher_icons: ^0.10.0
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +59,12 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  android: "ic_launcher"
+  image_path_android: "assets/icon_calendar/launcher_ico.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  background_color: "#FFFFFF"
 
 # The following section is specific to Flutter.
 flutter:

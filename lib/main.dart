@@ -154,18 +154,25 @@ class _HomePageState extends State<HomePage> {
                 future: mood,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if(snapshot.connectionState == ConnectionState.waiting){
-                    return Column(
-                      children: const [
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: CircularProgressIndicator(),
+                    return Scaffold(
+                      appBar: AppBar(
+                        title: const Text("Loading"),
+                      ),
+                      body: Center(
+                        child: Column(
+                          children: const [
+                            SizedBox(
+                              width: 60,
+                              height: 60,
+                              child: CircularProgressIndicator(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 16),
+                              child: Text('Awaiting result...'),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 16),
-                          child: Text('Awaiting result...'),
-                        ),
-                      ],
+                      ),
                     );
                   }else{
                     return Scaffold(
@@ -230,6 +237,7 @@ class Firestore {
       Map<DateTime, int> mood = {};
       temp.forEach((key, value) {mood.putIfAbsent(Timestamp.fromMillisecondsSinceEpoch(int.parse(key)).toDate().toUtc() , () => int.parse(value.toString()));});
       // print(mood); //DEBUG ONLY
+      
       return mood;
     }
   }
