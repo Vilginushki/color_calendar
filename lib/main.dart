@@ -1,24 +1,26 @@
-import 'package:color_calendar/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:color_calendar/widgets/calendar.dart';
 import 'package:color_calendar/widgets/colors.dart';
-import 'package:color_calendar/widgets/icons_buttons.dart';
-import 'package:color_calendar/widgets/selector.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart'
     hide EmailAuthProvider, PhoneAuthProvider;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
-import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FirebaseUIAuth.configureProviders([
+    EmailAuthProvider(),
+  ]);
   runApp(ChangeNotifierProvider(
       create: (context) => ApplicationState(),
       builder: ((context, child) => const App())));
@@ -30,7 +32,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/home',
+      initialRoute: '/sign-in',
       routes: {
         '/home': (context) {
           return const HomePage();
@@ -67,15 +69,18 @@ class App extends StatelessWidget {
           );
         }),
         '/forgot-password': ((context) {
-          final arguments = ModalRoute.of(context)?.settings.arguments
-              as Map<String, dynamic>?;
+          final arguments = ModalRoute
+              .of(context)
+              ?.settings
+              .arguments
+          as Map<String, dynamic>?;
 
           return ForgotPasswordScreen(
             email: arguments?['email'] as String,
             headerMaxExtent: 200,
           );
         }),
-        '/profile': ((context) {
+        '/profile': ((context) {//Not used right now
           return ProfileScreen(
             providers: [],
             actions: [
@@ -88,14 +93,19 @@ class App extends StatelessWidget {
           );
         })
       },
-      title: 'Kolorowy kalendarzyk (może)',
+      title: 'Color your calendar',
       theme: ThemeData(
-        buttonTheme: Theme.of(context).buttonTheme.copyWith(
-              highlightColor: Colors.deepPurple,
-            ),
+        buttonTheme: Theme
+            .of(context)
+            .buttonTheme
+            .copyWith(
+          highlightColor: Colors.deepPurple,
+        ),
         primarySwatch: Colors.deepPurple,
         textTheme: GoogleFonts.robotoTextTheme(
-          Theme.of(context).textTheme,
+          Theme
+              .of(context)
+              .textTheme,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -121,43 +131,69 @@ class _HomePageState extends State<HomePage> {
     Colors.red
   ];
 
-  void changeEdit(int i) => setState(() {
+  void changeEdit(int i) =>
+      setState(() {
         edit = i;
       });
 
   void changeColors(Color colors) =>
       setState(() => currentColors[edit] = colors);
-  List<String> currentText = ["Super", "Dobry", "Śmieszny", "Zły", "Tragiczny"];
+  List<String> currentText = ["Super", "Good", "Funny", "Bad", "Really bad"];
 
-  Map<DateTime, Mood> moods = Map();
+  Map<DateTime, int> moods = {};
 
-  void changeMoods(Map<DateTime, Mood> x) => setState(() => moods.addAll(x));
+  void changeMoods(Map<DateTime, int> x) => setState(() => moods.addAll(x));
+
+  Future<Map<DateTime, int>?> mood = Firestore.getMoods();
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ApplicationState>(
-        builder: (context, appState, child) => Scaffold(
-            appBar: AppBar(
-              title: const Text('Zabawa w kalendarzyk'), //todo: edit
-            ),
-            body: Column(
-              children: [
-                Container(
-                    margin: const EdgeInsets.only(bottom: 5),
-                    child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Calendar(
-                            pickerColor: currentColors,
-                            texts: currentText,
-                            moods: moods))),
-                ColorPicker(
-                  pickerColor: currentColors,
-                  onColorChanged: changeColors,
-                  onEditChanged: changeEdit,
-                  texts: currentText,
-                ),
-              ],
-            )));
+        builder: (context, appState, child) =>
+            FutureBuilder(
+                future: mood,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return Column(
+                      children: const [
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text('Awaiting result...'),
+                        ),
+                      ],
+                    );
+                  }else{
+                    return Scaffold(
+                        appBar: AppBar(
+                          title: const Text('Color your calendar'), //todo: edit
+                        ),
+                        body: Column(
+                            children: [
+                              Container(
+                                  margin: const EdgeInsets.only(bottom: 5),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Calendar(
+                                        pickerColor: currentColors,
+                                        texts: currentText,
+                                        moods: snapshot.data,
+                                      ))),
+                              ColorPicker(
+                                pickerColor: currentColors,
+                                onColorChanged: changeColors,
+                                onEditChanged: changeEdit,
+                                texts: currentText,
+                              ),
+                            ],
+                        )
+                    );}
+                  }
+                ));
   }
 }
 
@@ -171,13 +207,6 @@ class ApplicationState extends ChangeNotifier {
   bool get loggedIn => _loggedIn;
 
   Future<void> init() async {
-    await Firebase.initializeApp(
-        name: 'color-calendar',
-        options: DefaultFirebaseOptions.currentPlatform);
-
-    FirebaseUIAuth.configureProviders([
-      EmailAuthProvider(),
-    ]);
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
@@ -188,4 +217,21 @@ class ApplicationState extends ChangeNotifier {
       notifyListeners();
     });
   }
+}
+
+class Firestore {
+  static Future<Map<DateTime, int>?> getMoods() async {
+    DocumentSnapshot snap = await (FirebaseFirestore.instance
+        .collection("days")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get());
+    if(snap.exists){
+      Map<String, dynamic> temp = snap["map"];
+      Map<DateTime, int> mood = {};
+      temp.forEach((key, value) {mood.putIfAbsent(Timestamp.fromMillisecondsSinceEpoch(int.parse(key)).toDate().toUtc() , () => int.parse(value.toString()));});
+      // print(mood); //DEBUG ONLY
+      return mood;
+    }
+  }
+//todo: save
 }

@@ -21,181 +21,180 @@ class ColorPicker extends StatefulWidget {
 class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Column(
+    children: [
+      GestureDetector(
+        onTap: () {
+          widget.onEditChanged(0);
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  titlePadding: const EdgeInsets.all(0),
+                  contentPadding: const EdgeInsets.all(0),
+                  content: SingleChildScrollView(
+                    child: MaterialPicker(
+                      onColorChanged: widget.onColorChanged,
+                      pickerColor: widget.pickerColor[0],
+                      enableLabel: true,
+                      portraitOnly: true,
+                    ),
+                  ),
+                );
+                Navigator.of(context).pop();
+              });
+          },
+        child: Row(
         children: [
-          GestureDetector(
-            onTap: () {
-              widget.onEditChanged(0);
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      titlePadding: const EdgeInsets.all(0),
-                      contentPadding: const EdgeInsets.all(0),
-                      content: SingleChildScrollView(
-                        child: MaterialPicker(
-                          onColorChanged: widget.onColorChanged,
-                          pickerColor: widget.pickerColor[0],
-                          enableLabel: true,
-                          portraitOnly: true,
-                        ),
-                      ),
-                    );
-                    Navigator.of(context).pop();
-                  });
-              },
-            child: Row(
-            children: [
-              Container(
-                height: 30,
-                width: 30,
-                margin: EdgeInsets.all(4),
-                child: ColoredBox(
-                  color: widget.pickerColor[0],
-                ),
-              ),
-              Text("Super"),
-            ],
+          Container(
+            height: 30,
+            width: 30,
+            margin: const EdgeInsets.all(4),
+            child: ColoredBox(
+              color: widget.pickerColor[0],
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            widget.onEditChanged(1);
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    titlePadding: const EdgeInsets.all(0),
-                    contentPadding: const EdgeInsets.all(0),
-                    content: SingleChildScrollView(
-                      child: MaterialPicker(
-                        onColorChanged: widget.onColorChanged,
-                        pickerColor: widget.pickerColor[1],
-                        enableLabel: true,
-                        portraitOnly: true,
-                      ),
-                    ),
-                  );
-                });
-          },
-          child: Row(
-            children: [
-              Container(
-                height: 30,
-                width: 30,
-                margin: EdgeInsets.all(4),
-                child: ColoredBox(
-                  color: widget.pickerColor[1],
+          Text(widget.texts[0]),
+        ],
+      ),
+    ),
+    GestureDetector(
+      onTap: () {
+        widget.onEditChanged(1);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                titlePadding: const EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.all(0),
+                content: SingleChildScrollView(
+                  child: MaterialPicker(
+                    onColorChanged: widget.onColorChanged,
+                    pickerColor: widget.pickerColor[1],
+                    enableLabel: true,
+                    portraitOnly: true,
+                  ),
                 ),
-              ),
-              Text("Dobry"),
-            ],
+              );
+            });
+      },
+      child: Row(
+        children: [
+          Container(
+            height: 30,
+            width: 30,
+            margin: const EdgeInsets.all(4),
+            child: ColoredBox(
+              color: widget.pickerColor[1],
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            widget.onEditChanged(2);
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    titlePadding: const EdgeInsets.all(0),
-                    contentPadding: const EdgeInsets.all(0),
-                    content: SingleChildScrollView(
-                      child: MaterialPicker(
-                        onColorChanged: widget.onColorChanged,
-                        pickerColor: widget.pickerColor[2],
-                        enableLabel: true,
-                        portraitOnly: true,
-                      ),
-                    ),
-                  );
-                });
-          },
-          child: Row(
-            children: [
-              Container(
-                height: 30,
-                width: 30,
-                margin: EdgeInsets.all(4),
-                child: ColoredBox(
-                  color: widget.pickerColor[2],
+          Text(widget.texts[1]),
+        ],
+      ),
+    ),
+    GestureDetector(
+      onTap: () {
+        widget.onEditChanged(2);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                titlePadding: const EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.all(0),
+                content: SingleChildScrollView(
+                  child: MaterialPicker(
+                    onColorChanged: widget.onColorChanged,
+                    pickerColor: widget.pickerColor[2],
+                    enableLabel: true,
+                    portraitOnly: true,
+                  ),
                 ),
-              ),
-              Text("Śmieszny"),
-            ],
+              );
+            });
+      },
+      child: Row(
+        children: [
+          Container(
+            height: 30,
+            width: 30,
+            margin: const EdgeInsets.all(4),
+            child: ColoredBox(
+              color: widget.pickerColor[2],
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            widget.onEditChanged(3);
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    titlePadding: const EdgeInsets.all(0),
-                    contentPadding: const EdgeInsets.all(0),
-                    content: SingleChildScrollView(
-                      child: MaterialPicker(
-                        onColorChanged: widget.onColorChanged,
-                        pickerColor: widget.pickerColor[3],
-                        enableLabel: true,
-                        portraitOnly: true,
-                      ),
-                    ),
-                  );
-                });
-          },
-          child: Row(
-            children: [
-              Container(
-                height: 30,
-                width: 30,
-                margin: EdgeInsets.all(4),
-                child: ColoredBox(
-                  color: widget.pickerColor[3],
+          Text(widget.texts[2]),
+        ],
+      ),
+    ),
+    GestureDetector(
+      onTap: () {
+        widget.onEditChanged(3);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                titlePadding: const EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.all(0),
+                content: SingleChildScrollView(
+                  child: MaterialPicker(
+                    onColorChanged: widget.onColorChanged,
+                    pickerColor: widget.pickerColor[3],
+                    enableLabel: true,
+                    portraitOnly: true,
+                  ),
                 ),
-              ),
-              Text("Zły"),
-            ],
+              );
+            });
+      },
+      child: Row(
+        children: [
+          Container(
+            height: 30,
+            width: 30,
+            margin: const EdgeInsets.all(4),
+            child: ColoredBox(
+              color: widget.pickerColor[3],
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            widget.onEditChanged(4);
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    titlePadding: const EdgeInsets.all(0),
-                    contentPadding: const EdgeInsets.all(0),
-                    content: SingleChildScrollView(
-                      child: MaterialPicker(
-                        onColorChanged: widget.onColorChanged,
-                        pickerColor: widget.pickerColor[4],
-                        enableLabel: true,
-                        portraitOnly: true,
-                      ),
-                    ),
-                  );
-                });
-          },
-          child: Row(
-            children: [
-              Container(
-                height: 30,
-                width: 30,
-                margin: EdgeInsets.all(4),
-                child: ColoredBox(
-                  color: widget.pickerColor[4],
+          Text(widget.texts[3]),
+        ],
+      ),
+    ),
+    GestureDetector(
+      onTap: () {
+        widget.onEditChanged(4);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                titlePadding: const EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.all(0),
+                content: SingleChildScrollView(
+                  child: MaterialPicker(
+                    onColorChanged: widget.onColorChanged,
+                    pickerColor: widget.pickerColor[4],
+                    enableLabel: true,
+                    portraitOnly: true,
+                  ),
                 ),
-              ),
-              Text("Tragiczny"),
-            ],
+              );
+            });
+      },
+      child: Row(
+        children: [
+          Container(
+            height: 30,
+            width: 30,
+            margin: const EdgeInsets.all(4),
+            child: ColoredBox(
+              color: widget.pickerColor[4],
+            ),
           ),
-        ),
+          Text(widget.texts[4]),
+        ],
+      ),
+    ),
       ],
-    ));
+    );
   }
 }
