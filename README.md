@@ -1,16 +1,13 @@
 # color_calendar
 
-Flutter app that lets you color every day of year , depending on your mood.
+Flutter app that lets you color every day of year, depending on your mood.
 
-## Getting Started
+## Compability
 
-This project is a starting point for a Flutter application.
+Right now its compatible only with android
 
-A few resources to get you started if this is your first Flutter project:
+## Descption
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+App in actual state is fully functional, using Firebase Auth and Firebase Firestore.
+There are plans for some functionalities, after which app may be deployed to Google Store and Apple App Store.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
